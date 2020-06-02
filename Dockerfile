@@ -24,4 +24,4 @@ COPY --from=builder /src/xteve/xteve .
 
 EXPOSE 34400
 
-CMD [ "./xteve" ]
+CMD [ "./xteve -config /opt/xteve-config" ]
