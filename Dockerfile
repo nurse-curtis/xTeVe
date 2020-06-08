@@ -18,7 +18,7 @@ RUN apk update
 RUN apk upgrade
 RUN apk add ca-certificates
 RUN rm -rf /var/cache/apk/*
-RUN apk add  --no-cache ffmpeg vlc rsync bash busybox-suid su-exec
+RUN apk add  --no-cache ffmpeg vlc rsync bash busybox-suid su-exec curl
 
 # Volumes
 VOLUME /config
