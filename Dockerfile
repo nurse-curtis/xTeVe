@@ -14,16 +14,31 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o xteve xTeVe/xteve
 
 FROM alpine:latest
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk update
+RUN apk upgrade
+RUN apk add ca-certificates
+RUN rm -rf /var/cache/apk/*
+RUN apk add  --no-cache ffmpeg vlc rsync bash busybox-suid su-exec
 
-RUN apk add  --no-cache ffmpeg vlc rsync
+# Volumes
+VOLUME /config
+VOLUME /root/.xteve
+VOLUME /tmp/xteve
 
-WORKDIR /usr/bin
+COPY --from=builder /src/xteve/xteve /usr/bin/
 
-COPY --from=builder /src/xteve/xteve .
+ADD cronjob.sh /
+ADD entrypoint.sh /
+ADD sample_cron.txt /
+ADD sample_xteve.txt /
+
+# Set executable permissions
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /cronjob.sh
+RUN chmod +x /usr/bin/xteve
 
 EXPOSE 34400
-VOLUME /opt/xteve-config
-USER 1001:1000
 
-CMD [ "/usr/bin/xteve -config /opt/xteve-config" ]
+# CMD [ "/usr/bin/xteve -config /opt/xteve-config" ]
+# Entrypoint
+ENTRYPOINT ["./entrypoint.sh"]
