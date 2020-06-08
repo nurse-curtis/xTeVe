@@ -26,4 +26,4 @@ EXPOSE 34400
 VOLUME /opt/xteve-config
 USER 1001:1000
 
-CMD [ "./xteve -config /opt/xteve-config" ]
+CMD [ "/usr/bin/xteve -config /opt/xteve-config" ]
