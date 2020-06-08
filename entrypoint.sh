@@ -4,6 +4,13 @@ crond -l 2
 
 CRONJOB_FILE=/config/cronjob.sh
 
+
+if [ -f "/mnt/xmltv/.nfscheck" ]; then
+	/usr/bin/rsync -arzhP --delete /mnt/xmltv/*-sorted.xml /opt/xmltv/
+else
+	echo "no nfs"
+fi
+
 if [ -f "$CRONJOB_FILE" ]; then
 	echo "$CRONJOB_FILE exist"
 	chmod +x $CRONJOB_FILE
