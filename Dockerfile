@@ -23,7 +23,7 @@ WORKDIR /usr/bin
 COPY --from=builder /src/xteve/xteve .
 
 EXPOSE 34400
-
+VOLUME /opt/xteve-config
 USER 1001:1000
 
 CMD [ "./xteve -config /opt/xteve-config" ]
