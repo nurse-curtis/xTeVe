@@ -1,0 +1,12 @@
+version: '2'
+services:
+  xteve:
+    image: nursecurtis/xteve
+    volumes:
+    - /opt/docker/xteve/xteve-config:/opt/xteve-config
+    ports:
+    - 34400:34400/tcp
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label_soft: name=crabdance
+
